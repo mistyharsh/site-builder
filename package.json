@@ -1,0 +1,42 @@
+{
+  "name": "crm",
+  "version": "0.1.0",
+  "description": "An friendly neigherhood CRM.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "check:types": "tsc",
+    "check:cycles": "tsx ./scripts/cycles.ts",
+    "dev": "dotenv -- tsx watch --clear-screen=false ./src/main.ts",
+    "dev:migrate": "dotenv -- tsx ./src/migrate.ts",
+    "dev:generate": "drizzle-kit generate:pg",
+    "test": "NODE_OPTIONS='--import tsx' node --test",
+    "test:setup:db": "dotenv -e .env.test -- tsx ./test/setupDb.ts",
+    "test:teardown:db": "dotenv -e .env.test -- tsx ./test/setupDb.ts --teardown"
+  },
+  "author": "",
+  "license": "SEE LICENSE IN LICENSE",
+  "volta": {
+    "node": "20.10.0"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.3.3",
+    "@pothos/core": "^3.41.0",
+    "@webf/base": "0.2.0",
+    "drizzle-kit": "^0.20.9",
+    "drizzle-orm": "^0.29.1",
+    "graphql": "^16.8.1",
+    "hono": "^3.11.9",
+    "postgres": "^3.4.3",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/madge": "^5.0.3",
+    "@types/node": "^20.10.6",
+    "dotenv": "^16.3.1",
+    "dotenv-cli": "^7.3.0",
+    "madge": "^6.1.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.3"
+  }
+}
