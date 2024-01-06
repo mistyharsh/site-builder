@@ -16,5 +16,5 @@ export type DbClientOptions = {
 };
 
 export function initDbRepo(options: DbClientOptions): DbClient {
-  return drizzle(options.pgClient, { schema });
+  return drizzle(options.pgClient, { schema, logger: true });
 }

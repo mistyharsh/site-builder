@@ -2,6 +2,7 @@ import { serve } from '@hono/node-server';
 import postgres from 'postgres';
 
 import { makeEnv } from './env.js';
+import { saveGraphQLSchema } from './graphql/schema.js';
 import { makeApp } from './server/app.js';
 
 export async function main() {
@@ -9,6 +10,10 @@ export async function main() {
 
   const app = await makeApp(appEnv);
   const cleanup = cleanupFn(appEnv.pgClient);
+
+  if (process.env.NODE_ENV === 'development') {
+    await saveGraphQLSchema('./schema.graphql');
+  }
 
   serve({
     fetch: app.fetch,

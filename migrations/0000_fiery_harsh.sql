@@ -32,6 +32,20 @@ CREATE TABLE IF NOT EXISTS "country" (
 	CONSTRAINT "country_code_unique" UNIQUE("code")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "invitation" (
+	"id" text PRIMARY KEY NOT NULL,
+	"code" text NOT NULL,
+	"first_name" text NOT NULL,
+	"last_name" text NOT NULL,
+	"email" text NOT NULL,
+	"duration" integer NOT NULL,
+	"expirty_at" timestamp with time zone NOT NULL,
+	"tenant_id" text NOT NULL,
+	"created_at" timestamp with time zone NOT NULL,
+	"updated_at" timestamp with time zone NOT NULL,
+	CONSTRAINT "invitation_code_unique" UNIQUE("code")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "local_login" (
 	"user_id" text PRIMARY KEY NOT NULL,
 	"username" text NOT NULL,
@@ -39,7 +53,7 @@ CREATE TABLE IF NOT EXISTS "local_login" (
 	"hash_fn" text NOT NULL,
 	"created_at" timestamp with time zone NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL,
-	CONSTRAINT "username" UNIQUE("username")
+	CONSTRAINT "local_login_username_unique" UNIQUE("username")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "login_attempt" (
@@ -69,7 +83,7 @@ CREATE TABLE IF NOT EXISTS "reset_password_request" (
 	"user_id" text NOT NULL,
 	"created_at" timestamp with time zone NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL,
-	CONSTRAINT "code" UNIQUE("code")
+	CONSTRAINT "reset_password_request_code_unique" UNIQUE("code")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "state" (
@@ -112,7 +126,7 @@ CREATE TABLE IF NOT EXISTS "user_email" (
 	"email" text NOT NULL,
 	"verified" boolean NOT NULL,
 	"user_id" text NOT NULL,
-	CONSTRAINT "email" UNIQUE("email")
+	CONSTRAINT "user_email_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "user_token" (
@@ -189,6 +203,12 @@ END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "city" ADD CONSTRAINT "city_state_id_state_id_fk" FOREIGN KEY ("state_id") REFERENCES "state"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "invitation" ADD CONSTRAINT "invitation_tenant_id_tenant_id_fk" FOREIGN KEY ("tenant_id") REFERENCES "tenant"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

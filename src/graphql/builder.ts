@@ -1,22 +1,20 @@
 import SchemaBuilder from '@pothos/core';
-import { GraphQLSchema } from 'graphql';
 
+import type { NewTenantInput, NewTenantResponse } from '../context/identity/tenant.js';
 import type { AppContext } from '../type.js';
 
-const builder = new SchemaBuilder<{
+export const builder = new SchemaBuilder<{
   Context: AppContext;
+  Objects: {
+    NewTenantResponse: NewTenantResponse;
+  };
+  Inputs: {
+    NewTenantInput: NewTenantInput;
+  };
 }>({});
 
-builder.queryType({
-  fields: (t) => ({
-    hello: t.string({
-      resolve: (parent, args, context, info) => {
-        console.log('context', context);
+// GraphQL query
+builder.queryType({});
 
-        return `Hello GraphQL!`;
-      }
-    }),
-  }),
-});
-
-export const schema: GraphQLSchema = builder.toSchema();
+// GraphQL mutation
+builder.mutationType({});

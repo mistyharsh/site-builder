@@ -1,6 +1,6 @@
 import postgres from 'postgres';
 
-import { initialize } from '@webf/base/auth/core/system';
+import { initialize } from '@webf/base/context/system';
 
 import { parseEnv, run } from '../src/migrate.js';
 import { initDbRepo } from '../src/db/client.js';

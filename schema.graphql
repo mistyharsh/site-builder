@@ -1,0 +1,21 @@
+type Mutation {
+  createTenant(input: NewTenantInput!): NewTenantResponse!
+}
+
+input NewTenantInput {
+  description: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  name: String!
+}
+
+"""A new tenant with an invite"""
+type NewTenantResponse {
+  description: String!
+  id: ID!
+}
+
+type Query {
+  hello: String!
+}

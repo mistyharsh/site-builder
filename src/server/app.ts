@@ -1,7 +1,7 @@
-import { session } from '@webf/base/auth';
+import { session } from '@webf/base/hono';
 import { Hono } from 'hono';
 
-import { schema } from '../graphql/builder.js';
+import { schema } from '../graphql/schema.js';
 import { graphqlServer } from '../patch/index.js';
 import type { AppEnv } from '../type.js';
 import { setupAuth } from './auth.js';
@@ -21,6 +21,15 @@ export async function makeApp(env: AppEnv): Promise<HonoApp> {
   // Authentication endpoints
   app.route('/auth', authSystem.auth);
 
+  app.use('*', async (c, next) => {
+
+    c.set('context', {
+      db: env.db,
+      access: c.var.session,
+    });
+
+    await next();
+  });
 
   //// APPLICATION ROUTES ////
   // Root route

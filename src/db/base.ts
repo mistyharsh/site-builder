@@ -1,5 +1,6 @@
 export {
   apiKey,
+  invitation,
   localLogin,
   loginAttempt,
   providerLogin,

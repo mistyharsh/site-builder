@@ -1,6 +1,6 @@
-import { makeAuth, addOpenIDStrategy } from '@webf/base/auth';
-import { google } from '@webf/base/auth/provider';
-import { AuthSystem, OAuthCallbacks } from '@webf/base/auth/type';
+import { makeAuth, addOpenIDStrategy } from '@webf/base/hono';
+import { google } from '@webf/base/provider';
+import { AuthSystem, OAuthCallbacks } from '@webf/base/type';
 
 import { AppEnv } from '../type.js';
 import { HonoApp } from './type.js';
@@ -10,6 +10,7 @@ export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> 
   const { auth, db } = await makeAuth({
     db: {
       pgClient: env.pgClient,
+      logger: true,
     },
   });
 
