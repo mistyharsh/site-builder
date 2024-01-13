@@ -1,4 +1,5 @@
 import { serve } from '@hono/node-server';
+import { showRoutes } from 'hono/dev';
 import postgres from 'postgres';
 
 import { makeEnv } from './env.js';
@@ -13,6 +14,7 @@ export async function main() {
 
   if (process.env.NODE_ENV === 'development') {
     await saveGraphQLSchema('./schema.graphql');
+    showRoutes(app, { verbose: true });
   }
 
   serve({

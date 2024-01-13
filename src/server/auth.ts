@@ -1,6 +1,6 @@
-import { makeAuth, addOpenIDStrategy } from '@webf/base/hono';
-import { google } from '@webf/base/provider';
-import { AuthSystem, OAuthCallbacks } from '@webf/base/type';
+import { makeAuth, addOpenIDStrategy } from '@webf/base/web';
+import { google } from '@webf/base/web';
+import { AuthSystem, OAuthCallbacks } from '@webf/base';
 
 import { AppEnv } from '../type.js';
 import { HonoApp } from './type.js';

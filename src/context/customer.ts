@@ -1,5 +1,3 @@
-import { createNewTenantWithInvite } from '@webf/base/context/tenant';
-
 import { AppContext } from '../type.js';
 
 

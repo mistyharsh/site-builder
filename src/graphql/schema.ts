@@ -6,10 +6,7 @@ import { printSchema, lexicographicSortSchema } from 'graphql';
 import { builder } from './builder.js';
 
 // Side effect imports
-import './input.js';
-import './output.js';
-import './query.js';
-import './mutation.js';
+import './identity.js';
 
 export const schema: GraphQLSchema = builder.toSchema();
 

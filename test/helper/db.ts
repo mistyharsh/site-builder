@@ -1,12 +1,14 @@
+import { pathToFileURL } from 'node:url';
+
 import postgres from 'postgres';
 
-import { initialize } from '@webf/base/context/system';
+import { initialize } from '@webf/base/context';
 
-import { parseEnv, run } from '../src/migrate.js';
-import { initDbRepo } from '../src/db/client.js';
+import { parseEnv, run } from '../../src/migrate.js';
+import { initDbRepo } from '../../src/db/client.js';
 
 
-function makeClient(useDb: boolean) {
+export function makeClient(useDb: boolean) {
   // Parse environment variables
   const dbEnv = parseEnv();
 
@@ -65,8 +67,11 @@ export async function teardownDb() {
 }
 
 
-if (process.argv[2] === '--teardown') {
-  teardownDb();
-} else {
-  setupCleanDb();
+// Run this file directly when invoked from the command line.
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  if (process.argv[2] === '--teardown') {
+    teardownDb();
+  } else {
+    setupCleanDb();
+  }
 }

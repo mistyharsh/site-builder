@@ -10,12 +10,9 @@ input NewTenantInput {
   name: String!
 }
 
-"""A new tenant with an invite"""
 type NewTenantResponse {
   description: String!
   id: ID!
 }
 
-type Query {
-  hello: String!
-}
+type Query

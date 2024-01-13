@@ -1,7 +1,6 @@
-import { isClient } from '@webf/base/context/access';
-import { createNewTenantWithInvite } from '@webf/base/context/tenant';
+import { isClient, createNewTenantWithInvite } from '@webf/base/context';
 
-import { AppContext } from '../../type.js';
+import type { AppContext } from '../../type.js';
 
 export type NewTenantInput = {
   name: string;
