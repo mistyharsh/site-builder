@@ -1,4 +1,6 @@
 type Mutation {
+  acceptInvitation(inviteId: String!): Boolean!
+  claimInvitation(inviteCode: String!, password: String!): Boolean!
   createTenant(input: NewTenantInput!): NewTenantResponse!
 }
 
@@ -15,4 +17,6 @@ type NewTenantResponse {
   id: ID!
 }
 
-type Query
+type Query {
+  hello: String!
+}

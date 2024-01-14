@@ -1,3 +1,4 @@
+import { accept, claim } from '../context/identity/invitation.js';
 import { createNewTenant } from '../context/identity/tenant.js';
 import { builder } from './builder.js';
 
@@ -19,20 +20,58 @@ builder.objectType('NewTenantResponse', {
   }),
 });
 
-builder.mutationField('createTenant', (t) => t.field({
-  type: 'NewTenantResponse',
-  args: {
-    input: t.arg({ type: 'NewTenantInput', required: true }),
-  },
-  async resolve(root, args, context) {
-    try {
-      const response = await createNewTenant(context, args.input);
 
-      return response;
-    } catch (error) {
-      // TODO:
-      console.error(error);
-      throw error;
-    }
-  },
+builder.mutationFields((t) => ({
+  createTenant: t.field({
+    type: 'NewTenantResponse',
+    args: {
+      input: t.arg({ type: 'NewTenantInput', required: true }),
+    },
+    async resolve(_parent, args, context) {
+      try {
+        const response = await createNewTenant(context, args.input);
+
+        return response;
+      } catch (error) {
+        // TODO:
+        console.error(error);
+        throw error;
+      }
+    },
+  }),
+
+  claimInvitation: t.field({
+    type: 'Boolean',
+    args: {
+      inviteCode: t.arg({ type: 'String', required: true }),
+      password: t.arg({ type: 'String', required: true }),
+    },
+    async resolve(_parent, args, context) {
+      try {
+        const response = await claim(context, args.inviteCode, args.password);
+
+        return response;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+  }),
+
+  acceptInvitation: t.field({
+    type: 'Boolean',
+    args: {
+      inviteId: t.arg({ type: 'String', required: true }),
+    },
+    async resolve(_parent, args, context) {
+      try {
+        const response = await accept(context, args.inviteId);
+
+        return response;
+      } catch (error) {
+        console.log(error);
+        throw error;
+      }
+    },
+  }),
 }));

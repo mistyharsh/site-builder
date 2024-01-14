@@ -30,3 +30,11 @@ export function getClientAccess(): Access {
 
   return access;
 }
+
+export function getPublicAccess(): Access {
+  const access: Access = {
+    type: 'public',
+  };
+
+  return access;
+}
