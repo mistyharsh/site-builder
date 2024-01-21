@@ -19,7 +19,7 @@ export async function main() {
 
   serve({
     fetch: app.fetch,
-    port: 8080,
+    port: appEnv.port,
   }, (info) => {
     console.log(`🚀 Server ready at ${info.address}:${info.port}`);
   });

@@ -1,7 +1,6 @@
-import { makeAuth, addOpenIDStrategy } from '@webf/base/web';
-import { google } from '@webf/base/web';
+import { OAuthCallbacks } from '@webf/base';
 import { claimWithSocial } from '@webf/base/context';
-import { AuthSystem, OAuthCallbacks } from '@webf/base';
+import { makeAuth, addOpenIDStrategy, addPasswordStrategy, google, AuthSystem } from '@webf/base/web';
 
 import { AppEnv } from '../type.js';
 import { HonoApp } from './type.js';
@@ -44,10 +43,11 @@ export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> 
   const googleClient = await google({
     clientId: env.googleClientId,
     clientSecret: env.googleClientSecret,
-    redirectUri: 'http://localhost:8080/auth/openid/google/callback',
+    redirectUri: `${env.hostUrl}/auth/openid/google/callback`,
   });
 
   await addOpenIDStrategy(auth, googleClient, callbacks);
+  await addPasswordStrategy(auth);
 
   return { auth, db };
 }

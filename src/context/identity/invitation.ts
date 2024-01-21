@@ -1,8 +1,11 @@
 import {
   claimInvitation,
   acceptInvitation,
+  inviteUser,
   isPublic,
   isUser,
+  NewInvitationInput,
+  isMember,
 } from '@webf/base/context';
 
 import { AppContext } from '../../type.js';
@@ -32,4 +35,16 @@ export async function accept(ctx: AppContext, inviteId: string): Promise<boolean
   await acceptInvitation(ctx, inviteId, userId);
 
   return true;
+}
+
+export async function invite(ctx: AppContext, tenantId: string, input: NewInvitationInput): Promise<boolean> {
+  const { access } = ctx;
+
+  if (!isMember(access, tenantId)) {
+    throw new Error('Invalid access');
+  }
+
+  const invitation = await inviteUser(ctx, input, tenantId);
+
+  return !!invitation;
 }

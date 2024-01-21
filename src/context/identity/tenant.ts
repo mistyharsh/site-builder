@@ -1,6 +1,7 @@
-import { isClient, createNewTenantWithInvite } from '@webf/base/context';
+import { isClient, createNewTenantWithInvite, Tenant, isUser } from '@webf/base/context';
 
 import type { AppContext } from '../../type.js';
+import { getTenantsForUser } from '@webf/base/dal';
 
 export type NewTenantInput = {
   name: string;
@@ -38,4 +39,17 @@ export async function createNewTenant(context: AppContext, input: NewTenantInput
     id: response.tenant.id,
     description: response.tenant.description,
   };
+}
+
+
+export async function getTenants(context: AppContext): Promise<Tenant[]> {
+  const { access, db } = context;
+
+  if (!isUser(access)) {
+    throw 'Not authorized';
+  }
+
+  const tenants = await getTenantsForUser(db, access.user.id);
+
+  return tenants;
 }

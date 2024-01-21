@@ -5,6 +5,11 @@ import { initDbRepo } from './db/client.js';
 import type { AppEnv } from './type.js';
 
 const decoder = z.object({
+  HOST_URL: z.string(),
+
+  SERVER_HOST: z.string(),
+  SERVER_PORT: z.coerce.number(),
+
   DB_HOST: z.string(),
   DB_PORT: z.coerce.number(),
   DB_USER: z.string(),
@@ -30,8 +35,13 @@ export function makeEnv(): AppEnv {
   const db = initDbRepo({ pgClient });
 
   return {
+    hostUrl: env.HOST_URL,
+    server: env.SERVER_HOST,
+    port: env.SERVER_PORT,
+
     googleClientId: env.GOOGLE_CLIENT_ID,
     googleClientSecret: env.GOOGLE_CLIENT_SECRET,
+
     pgClient,
     db,
   };

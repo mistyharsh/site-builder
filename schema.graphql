@@ -2,6 +2,13 @@ type Mutation {
   acceptInvitation(inviteId: String!): Boolean!
   claimInvitation(inviteCode: String!, password: String!): Boolean!
   createTenant(input: NewTenantInput!): NewTenantResponse!
+  inviteUser(input: NewInvitationInput!, tenantId: String!): Boolean!
+}
+
+input NewInvitationInput {
+  email: String!
+  firstName: String!
+  lastName: String!
 }
 
 input NewTenantInput {
@@ -18,5 +25,19 @@ type NewTenantResponse {
 }
 
 type Query {
+  getTenants: [Tenant!]!
+  getUsers(tenantId: String!): [User!]!
   hello: String!
+}
+
+type Tenant {
+  description: String!
+  id: ID!
+  name: String!
+}
+
+type User {
+  firstName: String!
+  id: ID!
+  lastName: String!
 }
