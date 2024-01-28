@@ -7,8 +7,7 @@ import {
   NewInvitationInput,
   isMember,
 } from '@webf/base/context';
-
-import { AppContext } from '../../type.js';
+import type { AppContext } from '../../contract/Type.js';
 
 
 export async function claim(ctx: AppContext, inviteCode: string, password: string): Promise<boolean> {

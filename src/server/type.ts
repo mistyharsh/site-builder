@@ -1,6 +1,6 @@
 import type { Context, Hono } from 'hono';
 
-import type { AppContext } from '../type.js';
+import type { AppContext } from '../contract/Type.js';
 
 
 export type HonoAppVariables = {

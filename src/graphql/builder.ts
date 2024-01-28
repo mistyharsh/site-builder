@@ -1,8 +1,8 @@
 import SchemaBuilder from '@pothos/core';
 import { NewInvitationInput, Tenant, User } from '@webf/base/context';
 
+import type { AppContext } from '../contract/Type.js';
 import type { NewTenantInput, NewTenantResponse } from '../context/identity/tenant.js';
-import type { AppContext } from '../type.js';
 
 export type GraphQLSchema = {
   Context: AppContext;

@@ -1,8 +1,8 @@
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { ExecutionResult, graphql, print } from 'graphql';
 
+import type { AppContext } from '../../src/contract/Type.js';
 import { schema } from '../../src/graphql/schema.js';
-import { AppContext } from '../../src/type.js';
 
 
 export function run<TResult, TVariables>(

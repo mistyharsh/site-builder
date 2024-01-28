@@ -15,8 +15,3 @@ export type AppEnv = {
   pgClient: Sql;
   db: DbClient;
 };
-
-export type AppContext = {
-  db: DbClient;
-  access: Access;
-};

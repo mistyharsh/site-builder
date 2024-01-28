@@ -1,88 +1,9 @@
 {
-  "id": "505787fc-deb8-4005-9148-ef16d13e46e8",
+  "id": "6da4c402-7120-4faf-ac80-dda2b069c4a9",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
   "tables": {
-    "address": {
-      "name": "address",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "house": {
-          "name": "house",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "street": {
-          "name": "street",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "city": {
-          "name": "city",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "zip_code": {
-          "name": "zip_code",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "timestamp with time zone",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "address_city_city_id_fk": {
-          "name": "address_city_city_id_fk",
-          "tableFrom": "address",
-          "tableTo": "city",
-          "columnsFrom": [
-            "city"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
-        },
-        "address_zip_code_postal_code_id_fk": {
-          "name": "address_zip_code_postal_code_id_fk",
-          "tableFrom": "address",
-          "tableTo": "postal_code",
-          "columnsFrom": [
-            "zip_code"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "api_key": {
       "name": "api_key",
       "schema": "",
@@ -215,6 +136,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "code"
+          ]
+        },
+        "country_isd_code_unique": {
+          "name": "country_isd_code_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "isd_code"
           ]
         }
       }
@@ -354,10 +282,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "local_login_user_id_user_id_fk": {
-          "name": "local_login_user_id_user_id_fk",
+        "local_login_user_id_app_user_id_fk": {
+          "name": "local_login_user_id_app_user_id_fk",
           "tableFrom": "local_login",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -404,10 +332,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "login_attempt_user_id_user_id_fk": {
-          "name": "login_attempt_user_id_user_id_fk",
+        "login_attempt_user_id_app_user_id_fk": {
+          "name": "login_attempt_user_id_app_user_id_fk",
           "tableFrom": "login_attempt",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -433,6 +361,12 @@
         },
         "code": {
           "name": "code",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "area": {
+          "name": "area",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -502,10 +436,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "provider_login_user_id_user_id_fk": {
-          "name": "provider_login_user_id_user_id_fk",
+        "provider_login_user_id_app_user_id_fk": {
+          "name": "provider_login_user_id_app_user_id_fk",
           "tableFrom": "provider_login",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -565,10 +499,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "reset_password_request_user_id_user_id_fk": {
-          "name": "reset_password_request_user_id_user_id_fk",
+        "reset_password_request_user_id_app_user_id_fk": {
+          "name": "reset_password_request_user_id_app_user_id_fk",
           "tableFrom": "reset_password_request",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -750,10 +684,10 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "tenant_user_user_id_user_id_fk": {
-          "name": "tenant_user_user_id_user_id_fk",
+        "tenant_user_user_id_app_user_id_fk": {
+          "name": "tenant_user_user_id_app_user_id_fk",
           "tableFrom": "tenant_user",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -776,8 +710,8 @@
         }
       }
     },
-    "user": {
-      "name": "user",
+    "app_user": {
+      "name": "app_user",
       "schema": "",
       "columns": {
         "id": {
@@ -847,10 +781,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "user_email_user_id_user_id_fk": {
-          "name": "user_email_user_id_user_id_fk",
+        "user_email_user_id_app_user_id_fk": {
+          "name": "user_email_user_id_app_user_id_fk",
           "tableFrom": "user_email",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -903,10 +837,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "user_token_user_id_user_id_fk": {
-          "name": "user_token_user_id_user_id_fk",
+        "user_token_user_id_app_user_id_fk": {
+          "name": "user_token_user_id_app_user_id_fk",
           "tableFrom": "user_token",
-          "tableTo": "user",
+          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
@@ -951,6 +885,73 @@
           "tableTo": "party",
           "columnsFrom": [
             "id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "organization_people": {
+      "name": "organization_people",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "organization_id": {
+          "name": "organization_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "organization_people_organization_id_organization_id_fk": {
+          "name": "organization_people_organization_id_organization_id_fk",
+          "tableFrom": "organization_people",
+          "tableTo": "organization",
+          "columnsFrom": [
+            "organization_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "organization_people_person_id_person_id_fk": {
+          "name": "organization_people_person_id_person_id_fk",
+          "tableFrom": "organization_people",
+          "tableTo": "person",
+          "columnsFrom": [
+            "person_id"
           ],
           "columnsTo": [
             "id"
@@ -1008,6 +1009,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "tenant_id": {
+          "name": "tenant_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -1022,7 +1029,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "party_tenant_id_tenant_id_fk": {
+          "name": "party_tenant_id_tenant_id_fk",
+          "tableFrom": "party",
+          "tableTo": "tenant",
+          "columnsFrom": [
+            "tenant_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -1042,15 +1063,33 @@
           "primaryKey": false,
           "notNull": true
         },
-        "address_id": {
-          "name": "address_id",
+        "house": {
+          "name": "house",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
+        "street": {
+          "name": "street",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "landmark": {
+          "name": "landmark",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "postal_code_id": {
+          "name": "postal_code_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_primary": {
+          "name": "is_primary",
+          "type": "boolean",
           "primaryKey": false,
           "notNull": true
         },
@@ -1076,12 +1115,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "party_address_address_id_address_id_fk": {
-          "name": "party_address_address_id_address_id_fk",
+        "party_address_postal_code_id_postal_code_id_fk": {
+          "name": "party_address_postal_code_id_postal_code_id_fk",
           "tableFrom": "party_address",
-          "tableTo": "address",
+          "tableTo": "postal_code",
           "columnsFrom": [
-            "address_id"
+            "postal_code_id"
           ],
           "columnsTo": [
             "id"
@@ -1118,12 +1157,6 @@
         "is_primary": {
           "name": "is_primary",
           "type": "boolean",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true
         },
@@ -1181,15 +1214,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "country": {
-          "name": "country",
+        "country_id": {
+          "name": "country_id",
           "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true
         },
@@ -1215,12 +1242,12 @@
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
-        "party_phone_country_country_id_fk": {
-          "name": "party_phone_country_country_id_fk",
+        "party_phone_country_id_country_id_fk": {
+          "name": "party_phone_country_id_country_id_fk",
           "tableFrom": "party_phone",
           "tableTo": "country",
           "columnsFrom": [
-            "country"
+            "country_id"
           ],
           "columnsTo": [
             "id"
@@ -1248,14 +1275,14 @@
           "primaryKey": false,
           "notNull": true
         },
-        "middle_name": {
-          "name": "middle_name",
+        "family_name": {
+          "name": "family_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true
         },
-        "family_name": {
-          "name": "family_name",
+        "middle_name": {
+          "name": "middle_name",
           "type": "text",
           "primaryKey": false,
           "notNull": true

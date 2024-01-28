@@ -1,13 +1,3 @@
-CREATE TABLE IF NOT EXISTS "address" (
-	"id" text PRIMARY KEY NOT NULL,
-	"house" text NOT NULL,
-	"street" text NOT NULL,
-	"city" text NOT NULL,
-	"zip_code" text,
-	"created_at" timestamp with time zone NOT NULL,
-	"updated_at" timestamp with time zone NOT NULL
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "api_key" (
 	"id" text PRIMARY KEY NOT NULL,
 	"description" text NOT NULL,
@@ -29,7 +19,8 @@ CREATE TABLE IF NOT EXISTS "country" (
 	"name" text NOT NULL,
 	"code" text NOT NULL,
 	"isd_code" text NOT NULL,
-	CONSTRAINT "country_code_unique" UNIQUE("code")
+	CONSTRAINT "country_code_unique" UNIQUE("code"),
+	CONSTRAINT "country_isd_code_unique" UNIQUE("isd_code")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "invitation" (
@@ -65,6 +56,7 @@ CREATE TABLE IF NOT EXISTS "login_attempt" (
 CREATE TABLE IF NOT EXISTS "postal_code" (
 	"id" text PRIMARY KEY NOT NULL,
 	"code" text NOT NULL,
+	"area" text NOT NULL,
 	"city_id" text NOT NULL,
 	CONSTRAINT "postal_code_code_unique" UNIQUE("code")
 );
@@ -113,7 +105,7 @@ CREATE TABLE IF NOT EXISTS "tenant_user" (
 	CONSTRAINT "membership" UNIQUE("tenant_id","user_id")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "user" (
+CREATE TABLE IF NOT EXISTS "app_user" (
 	"id" text PRIMARY KEY NOT NULL,
 	"first_name" text NOT NULL,
 	"last_name" text NOT NULL,
@@ -142,6 +134,14 @@ CREATE TABLE IF NOT EXISTS "customer" (
 	"updated_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "organization_people" (
+	"id" text PRIMARY KEY NOT NULL,
+	"organization_id" text NOT NULL,
+	"person_id" text NOT NULL,
+	"created_at" timestamp with time zone NOT NULL,
+	"updated_at" timestamp with time zone NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "organization" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text NOT NULL
@@ -149,6 +149,7 @@ CREATE TABLE IF NOT EXISTS "organization" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "party" (
 	"id" text PRIMARY KEY NOT NULL,
+	"tenant_id" text NOT NULL,
 	"created_at" timestamp with time zone NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL
 );
@@ -156,8 +157,11 @@ CREATE TABLE IF NOT EXISTS "party" (
 CREATE TABLE IF NOT EXISTS "party_address" (
 	"id" text PRIMARY KEY NOT NULL,
 	"party_id" text NOT NULL,
-	"address_id" text NOT NULL,
-	"created_at" timestamp with time zone NOT NULL,
+	"house" text NOT NULL,
+	"street" text NOT NULL,
+	"landmark" text NOT NULL,
+	"postal_code_id" text,
+	"is_primary" boolean NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
@@ -166,7 +170,6 @@ CREATE TABLE IF NOT EXISTS "party_email" (
 	"party_id" text NOT NULL,
 	"address" text NOT NULL,
 	"is_primary" boolean NOT NULL,
-	"created_at" timestamp with time zone NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
@@ -175,31 +178,18 @@ CREATE TABLE IF NOT EXISTS "party_phone" (
 	"party_id" text NOT NULL,
 	"number" text NOT NULL,
 	"is_primary" boolean NOT NULL,
-	"country" text NOT NULL,
-	"created_at" timestamp with time zone NOT NULL,
+	"country_id" text NOT NULL,
 	"updated_at" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "person" (
 	"id" text PRIMARY KEY NOT NULL,
 	"given_name" text NOT NULL,
-	"middle_name" text NOT NULL,
 	"family_name" text NOT NULL,
+	"middle_name" text NOT NULL,
 	"dob" date,
 	"gender" text NOT NULL
 );
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "address" ADD CONSTRAINT "address_city_city_id_fk" FOREIGN KEY ("city") REFERENCES "city"("id") ON DELETE no action ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "address" ADD CONSTRAINT "address_zip_code_postal_code_id_fk" FOREIGN KEY ("zip_code") REFERENCES "postal_code"("id") ON DELETE cascade ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "city" ADD CONSTRAINT "city_state_id_state_id_fk" FOREIGN KEY ("state_id") REFERENCES "state"("id") ON DELETE cascade ON UPDATE no action;
@@ -214,13 +204,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "local_login" ADD CONSTRAINT "local_login_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "local_login" ADD CONSTRAINT "local_login_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "login_attempt" ADD CONSTRAINT "login_attempt_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "login_attempt" ADD CONSTRAINT "login_attempt_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -232,13 +222,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "provider_login" ADD CONSTRAINT "provider_login_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "provider_login" ADD CONSTRAINT "provider_login_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "reset_password_request" ADD CONSTRAINT "reset_password_request_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "reset_password_request" ADD CONSTRAINT "reset_password_request_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -256,19 +246,19 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tenant_user" ADD CONSTRAINT "tenant_user_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "tenant_user" ADD CONSTRAINT "tenant_user_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "user_email" ADD CONSTRAINT "user_email_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "user_email" ADD CONSTRAINT "user_email_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "user_token" ADD CONSTRAINT "user_token_user_id_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "user_token" ADD CONSTRAINT "user_token_user_id_app_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "app_user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -280,7 +270,25 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
+ ALTER TABLE "organization_people" ADD CONSTRAINT "organization_people_organization_id_organization_id_fk" FOREIGN KEY ("organization_id") REFERENCES "organization"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "organization_people" ADD CONSTRAINT "organization_people_person_id_person_id_fk" FOREIGN KEY ("person_id") REFERENCES "person"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
  ALTER TABLE "organization" ADD CONSTRAINT "organization_id_party_id_fk" FOREIGN KEY ("id") REFERENCES "party"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "party" ADD CONSTRAINT "party_tenant_id_tenant_id_fk" FOREIGN KEY ("tenant_id") REFERENCES "tenant"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -292,7 +300,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "party_address" ADD CONSTRAINT "party_address_address_id_address_id_fk" FOREIGN KEY ("address_id") REFERENCES "address"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "party_address" ADD CONSTRAINT "party_address_postal_code_id_postal_code_id_fk" FOREIGN KEY ("postal_code_id") REFERENCES "postal_code"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -310,7 +318,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "party_phone" ADD CONSTRAINT "party_phone_country_country_id_fk" FOREIGN KEY ("country") REFERENCES "country"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "party_phone" ADD CONSTRAINT "party_phone_country_id_country_id_fk" FOREIGN KEY ("country_id") REFERENCES "country"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

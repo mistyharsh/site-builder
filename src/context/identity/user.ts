@@ -1,7 +1,7 @@
 import { User, isMember } from '@webf/base/context';
 import { getUsersByTenant } from '@webf/base/dal';
+import type { AppContext } from '../../contract/Type.js';
 
-import { AppContext } from '../../type.js';
 
 
 export async function getUsers(ctx: AppContext, tenantId: string): Promise<User[]> {

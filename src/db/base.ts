@@ -13,7 +13,6 @@ export {
 } from '@webf/base/schema/identity';
 
 export {
-  address,
   city,
   country,
   postalCode,
