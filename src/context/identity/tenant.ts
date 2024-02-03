@@ -1,5 +1,5 @@
-import { isClient, createNewTenantWithInvite, Tenant, isUser } from '@webf/base/context';
-import { getTenantsForUser } from '@webf/base/dal';
+import { isClient, createNewTenantWithInvite, Tenant, isUser } from '@webf/auth/context';
+import { getTenantsForUser } from '@webf/auth/dal';
 import type { AppContext } from '../../contract/Type.js';
 
 

@@ -1,4 +1,4 @@
-import { Access } from '@webf/base/context';
+import { Access } from '@webf/auth/context';
 
 import { initDbRepo } from '../../src/db/client.js';
 import { makeClient } from './db.js';

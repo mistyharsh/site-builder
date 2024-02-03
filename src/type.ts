@@ -1,4 +1,4 @@
-import type { Access } from '@webf/base/context';
+import type { Access } from '@webf/auth/context';
 
 import type { Sql } from 'postgres';
 

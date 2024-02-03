@@ -1,6 +1,5 @@
-import { OAuthCallbacks } from '@webf/base';
-import { claimWithSocial } from '@webf/base/context';
-import { makeAuth, addOpenIDStrategy, addPasswordStrategy, google, AuthSystem } from '@webf/base/web';
+import type { AuthSystem, OAuthCallbacks } from '@webf/base';
+import { makeAuth, addOpenIDStrategy, addPasswordStrategy, google } from '@webf/base';
 
 import { AppEnv } from '../type.js';
 import { HonoApp } from './type.js';
@@ -15,25 +14,12 @@ export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> 
   });
 
   const callbacks: OAuthCallbacks = {
-    errorUrl: '/error',
     onLogin(_user, _profile) {
       return Promise.resolve('/');
     },
-    onLoginNoUser(profile) {
-      console.log('User not found', profile);
-
+    onError(error) {
+      console.error('Auth error', error);
       return Promise.resolve('/');
-    },
-    async onSignup(profile, state) {
-      const { inviteCode } = state;
-
-      if (inviteCode) {
-        const newUser = await claimWithSocial({ db }, inviteCode, profile);
-
-        return newUser;
-      }
-
-      // Do nothing if sign-up doesn't have invite code.
     },
   };
 

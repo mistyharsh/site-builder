@@ -2,7 +2,7 @@ import { pathToFileURL } from 'node:url';
 
 import postgres from 'postgres';
 
-import { initialize } from '@webf/base/context';
+import { initialize } from '@webf/auth/context';
 
 import { parseEnv, run } from '../../src/migrate.js';
 import { initDbRepo } from '../../src/db/client.js';

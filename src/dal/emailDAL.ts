@@ -1,5 +1,5 @@
-import { pk } from '@webf/base/util/code';
-import { partition } from '@webf/base/util/map';
+import { pk } from '@webf/auth/util/code';
+import { partition } from '@webf/auth/util/map';
 import { and, eq, notInArray } from 'drizzle-orm';
 
 import type { PartyEmail } from '../contract/DbType.js';

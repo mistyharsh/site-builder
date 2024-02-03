@@ -1,4 +1,4 @@
-import { isMember } from '@webf/base/context';
+import { isMember } from '@webf/auth/context';
 
 import type { AppContext, Organization, OrganizationInput } from '../../contract/Type.js';
 import { updateAddresses } from '../../dal/addressDAL.js';

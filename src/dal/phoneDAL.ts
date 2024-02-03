@@ -1,4 +1,4 @@
-import { pk } from '@webf/base/util/code';
+import { pk } from '@webf/auth/util/code';
 import { eq } from 'drizzle-orm';
 
 import { PartyPhone } from '../contract/DbType.js';

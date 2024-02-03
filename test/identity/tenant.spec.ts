@@ -1,11 +1,12 @@
 import { after, it } from 'node:test';
 import { equal } from 'node:assert';
 
+import { invitation } from '@webf/auth/schema/identity';
+import { and, eq } from 'drizzle-orm';
+
 import { graphql } from '../gql/gql.js';
 import { getClientAccess, getDb, getPublicAccess } from '../helper/context.js';
 import { run } from '../helper/graphql.js';
-import { invitation } from '@webf/base/schema/identity';
-import { and, eq } from 'drizzle-orm';
 
 // Get database client
 const { db, end } = getDb();

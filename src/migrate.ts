@@ -1,7 +1,7 @@
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 
-import { migrate } from '@webf/base/migrator';
+import { migrate } from '@webf/auth/migrator';
 import { z } from 'zod';
 
 const dbConfigDecoder = z.object({

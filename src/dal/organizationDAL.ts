@@ -1,4 +1,4 @@
-import { DbClient } from '@webf/base';
+import type { DbClient } from '@webf/auth/db';
 
 import type { Organization } from '../contract/DbType.js';
 import * as schema from '../db/party.js';

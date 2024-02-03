@@ -1,6 +1,6 @@
 import { DbClient } from '../../src/db/client.js';
 
-import { NewTenant, UserInput, createNewTenantWithInvite, createNewUser } from '@webf/base/context';
+import { NewTenant, UserInput, createNewTenantWithInvite, createNewUser } from '@webf/auth/context';
 
 export const tenant: NewTenant = {
   name: 'The Good Place',

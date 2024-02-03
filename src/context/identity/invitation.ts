@@ -6,7 +6,7 @@ import {
   isUser,
   NewInvitationInput,
   isMember,
-} from '@webf/base/context';
+} from '@webf/auth/context';
 import type { AppContext } from '../../contract/Type.js';
 
 

@@ -1,4 +1,4 @@
-import { pk } from '@webf/base/util/code';
+import { pk } from '@webf/auth/util/code';
 import { Person } from '../contract/DbType.js';
 import { PersonInput } from '../contract/Type.js';
 import type { DbClient } from '../db/client.js';

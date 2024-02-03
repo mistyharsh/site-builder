@@ -1,4 +1,4 @@
-import { session } from '@webf/base/web';
+import { session } from '@webf/base';
 import { Hono } from 'hono';
 
 import { schema } from '../graphql/schema.js';

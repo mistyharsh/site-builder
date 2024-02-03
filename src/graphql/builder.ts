@@ -1,5 +1,5 @@
 import SchemaBuilder from '@pothos/core';
-import { NewInvitationInput, Tenant, User } from '@webf/base/context';
+import { NewInvitationInput, Tenant, User } from '@webf/auth/context';
 
 import type { AppContext } from '../contract/Type.js';
 import type { NewTenantInput, NewTenantResponse } from '../context/identity/tenant.js';
