@@ -7,6 +7,7 @@ import { builder } from './builder.js';
 
 // Side effect imports
 import './identity.js';
+import './contact.js';
 
 export const schema: GraphQLSchema = builder.toSchema();
 

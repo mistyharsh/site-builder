@@ -15,7 +15,7 @@ it('Tenant', async (t) => {
 
   let tenantId = '';
 
-  const email = `test@test.io`;
+  const email = 'test@test.io';
   const newTenant = {
     name: 'Sensible Inc',
     description: 'First account',

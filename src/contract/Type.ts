@@ -37,10 +37,10 @@ export type CustomerInput = {
 export interface PersonInput extends CustomerInput {
   givenName: string;
   familyName: string;
-  middleName: string | null;
+  middleName?: string | null;
 
-  dob: Date | null;
-  gender: Gender | null;
+  dob?: Date | null;
+  gender?: Gender | null;
 }
 
 export interface OrganizationInput extends CustomerInput {

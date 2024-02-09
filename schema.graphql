@@ -1,6 +1,39 @@
+type Address {
+  house: String!
+  isPrimary: Boolean!
+  landmark: String!
+  postalCodeId: String
+  street: String!
+}
+
+input AddressInput {
+  house: String!
+  landmark: String!
+  postalCodeId: String!
+  street: String!
+}
+
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+type Email {
+  address: String!
+  isPrimary: Boolean!
+}
+
+input EmailInput {
+  address: String!
+  isPrimary: Boolean!
+}
+
+scalar Gender
+
 type Mutation {
   acceptInvitation(inviteId: String!): Boolean!
   claimInvitation(inviteCode: String!, password: String!): Boolean!
+  createOrganization(input: OrganizationInput!, tenantId: String!): Organization!
   createTenant(input: NewTenantInput!): NewTenantResponse!
   inviteUser(input: NewInvitationInput!, tenantId: String!): Boolean!
 }
@@ -22,6 +55,54 @@ input NewTenantInput {
 type NewTenantResponse {
   description: String!
   id: ID!
+}
+
+type Organization {
+  addresses: [Address!]!
+  emails: [Email!]!
+  id: ID!
+  name: String!
+  people: [Person!]!
+  phones: [Phone!]!
+}
+
+input OrganizationInput {
+  addresses: [AddressInput!]!
+  emails: [EmailInput!]!
+  name: String!
+  people: [PersonInput!]!
+  phones: [PhoneInput!]!
+}
+
+type Person {
+  dob: Date
+  familyName: String!
+  givenName1: String!
+  id: ID!
+  middleName: String!
+}
+
+input PersonInput {
+  addresses: [AddressInput!]!
+  dob: Date
+  emails: [EmailInput!]!
+  familyName: String!
+  gender: Gender!
+  givenName: String!
+  middleName: String
+  phones: [PhoneInput!]!
+}
+
+type Phone {
+  countryId: String!
+  isPrimary: Boolean!
+  number: String!
+}
+
+input PhoneInput {
+  countryId: String!
+  isPrimary: Boolean!
+  number: String!
 }
 
 type Query {
