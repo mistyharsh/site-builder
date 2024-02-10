@@ -41,17 +41,11 @@ builder.inputType('PersonInput', {
 
 builder.inputType('OrganizationInput', {
   fields: (t) => ({
-    addresses: t.field({
-      type: ['AddressInput'],
-    }),
-    emails: t.field({
-      type: ['EmailInput'],
-    }),
-    phones: t.field({
-      type: ['PhoneInput'],
-    }),
     name: t.string(),
     people: t.field({ type: ['PersonInput'] }),
+    addresses: t.field({ type: ['AddressInput'] }),
+    emails: t.field({ type: ['EmailInput'] }),
+    phones: t.field({ type: ['PhoneInput'] }),
   }),
 });
 

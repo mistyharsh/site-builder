@@ -24,4 +24,4 @@ node_modules/
 
 # Generated artifacts
 dist
-test/gql
+test/helper/gql

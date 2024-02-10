@@ -4,11 +4,11 @@ import postgres from 'postgres';
 
 import { initialize } from '@webf/auth/context';
 
-import { parseEnv, run } from '../../src/migrate.js';
-import { initDbRepo } from '../../src/db/client.js';
+import { parseEnv, run } from '../src/migrate.js';
+import { initDbRepo } from '../src/db/client.js';
 
 
-export function makeClient(useDb: boolean) {
+export function makePGClient(useDb: boolean) {
   // Parse environment variables
   const dbEnv = parseEnv();
 
@@ -26,7 +26,7 @@ export function makeClient(useDb: boolean) {
 
 export async function setupCleanDb() {
   // Parse environment variables and connect to database
-  const { dbEnv, sql } = makeClient(false);
+  const { dbEnv, sql } = makePGClient(false);
 
   // Create a new database
   await sql`CREATE DATABASE ${sql(dbEnv.DB_NAME)}`;
@@ -38,7 +38,7 @@ export async function setupCleanDb() {
   await sql.end();
 
   // Connect to the new database
-  const pgClient = makeClient(true).sql;
+  const pgClient = makePGClient(true).sql;
 
   const db = initDbRepo({ pgClient });
 
@@ -57,7 +57,7 @@ export async function setupCleanDb() {
 
 export async function teardownDb() {
   // Parse environment variables and connect to database
-  const { dbEnv, sql } = makeClient(false);
+  const { dbEnv, sql } = makePGClient(false);
 
   // Drop database
   await sql`DROP DATABASE ${sql(dbEnv.DB_NAME)}`;

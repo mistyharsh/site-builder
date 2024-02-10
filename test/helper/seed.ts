@@ -1,6 +1,23 @@
-import { DbClient } from '../../src/db/client.js';
+import {
+  type Invitation,
+  type NewTenant,
+  type UserInput,
+  type User,
+  type Tenant,
+  createNewTenantWithInvite,
+  createNewUser,
+} from '@webf/auth/context';
 
-import { NewTenant, UserInput, createNewTenantWithInvite, createNewUser } from '@webf/auth/context';
+import type { DbClient } from '../../src/db/client.js';
+import * as idSchema from '@webf/auth/schema/identity';
+import { eq, inArray } from 'drizzle-orm';
+
+export type SeedData = {
+  tenant: Tenant;
+  invitation: Invitation;
+  user1: User;
+  user2: User;
+};
 
 export const tenant: NewTenant = {
   name: 'The Good Place',
@@ -27,27 +44,38 @@ export const user2: UserInput = {
   tenantId: 'good-place',
 };
 
-export async function seed(db: DbClient) {
+export async function seed(db: DbClient): Promise<SeedData> {
   const context = { db };
 
   // Create a tenant
   const newTenant = await createNewTenantWithInvite(context, tenant);
   const newUser1 = await createNewUser(context, {
     ...user1,
-    tenantId: newTenant.tenant.id
+    tenantId: newTenant.tenant.id,
   }, 'afterlife');
 
   const newUser2 = await createNewUser(context, {
     ...user2,
-    tenantId: newTenant.tenant.id
+    tenantId: newTenant.tenant.id,
   }, 'afterlife');
 
   return {
-    tenant: newTenant,
-    users: [newUser1, newUser2],
+    tenant: newTenant.tenant,
+    invitation: newTenant.invitation,
+    user1: newUser1,
+    user2: newUser2,
   };
 }
 
-export function cleanup(db: DbClient) {
+export async function cleanup(db: DbClient, seedData: SeedData) {
+  const { tenant, invitation, user } = idSchema;
 
+  await db.delete(user)
+    .where(inArray(user.id, [seedData.user1.id, seedData.user2.id]));
+
+  await db.delete(invitation)
+    .where(eq(invitation.id, seedData.invitation.id));
+
+  await db.delete(tenant)
+    .where(eq(tenant.id, seedData.tenant.id));
 }

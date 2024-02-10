@@ -11,9 +11,9 @@
     "dev:db:migrate": "dotenv -- tsx ./src/migrate.ts",
     "dev:db:generate": "drizzle-kit generate:pg",
     "test": "dotenv -e .env.test -- tsx --test",
-    "test:gql": "graphql-codegen --c ./test/helper/codegen.ts",
-    "test:db:setup": "dotenv -e .env.test -- tsx ./test/helper/db.ts",
-    "test:db:teardown": "dotenv -e .env.test -- tsx ./test/helper/db.ts --teardown"
+    "test:gql": "graphql-codegen --c ./scripts/codegen.ts",
+    "test:db:setup": "dotenv -e .env.test -- tsx ./scripts/helper/db.ts",
+    "test:db:teardown": "dotenv -e .env.test -- tsx ./scripts/helper/db.ts --teardown"
   },
   "author": "",
   "license": "SEE LICENSE IN LICENSE",

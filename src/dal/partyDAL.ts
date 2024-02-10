@@ -31,8 +31,7 @@ export async function createCustomer(db: DbClient, partyId: string): Promise<voi
   const now = new Date();
 
   const newCustomer = {
-    id: pk(),
-    partyId,
+    id: partyId,
     createdAt: now,
     updatedAt: now,
   };

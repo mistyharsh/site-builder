@@ -4,6 +4,7 @@ import { ExecutionResult, graphql, print } from 'graphql';
 import type { AppContext } from '../../src/contract/Type.js';
 import { schema } from '../../src/graphql/schema.js';
 
+export { graphql as gql } from './gql/gql.js';
 
 export function run<TResult, TVariables>(
   query: TypedDocumentNode<TResult, TVariables>,

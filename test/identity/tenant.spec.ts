@@ -4,9 +4,8 @@ import { equal } from 'node:assert';
 import { invitation } from '@webf/auth/schema/identity';
 import { and, eq } from 'drizzle-orm';
 
-import { graphql } from '../gql/gql.js';
-import { getClientAccess, getDb, getPublicAccess } from '../helper/context.js';
-import { run } from '../helper/graphql.js';
+import { getClientAccess, getContext, getDb, getPublicAccess } from '../helper/context.js';
+import { gql, run } from '../helper/graphql.js';
 
 // Get database client
 const { db, end } = getDb();
@@ -26,9 +25,10 @@ it('Tenant', async (t) => {
 
   await t.test('createTenant()', async () => {
     const access = getClientAccess();
-    const context = { db, access };
+    const context = getContext(db, access);
 
-    const query = graphql(`
+    // SUT - System Under Test
+    const query = gql(`
       mutation createTenant($input: NewTenantInput!) {
         createTenant(input: $input) {
           id
@@ -37,7 +37,6 @@ it('Tenant', async (t) => {
       }
     `);
 
-    // SUT - System Under Test
     const result = await run(query, context, {
       input: newTenant
     });
@@ -50,7 +49,8 @@ it('Tenant', async (t) => {
   });
 
   await t.test('claimInvitation()', async () => {
-    const context = { db, access: getPublicAccess() };
+    const context = getContext(db, getPublicAccess());
+
     const invites = await db.select()
       .from(invitation)
       .where(and(
@@ -60,7 +60,7 @@ it('Tenant', async (t) => {
 
     const { code } = invites[0];
 
-    const query = graphql(`
+    const query = gql(`
       mutation claimInvitation($code: String! $password: String!) {
         claimInvitation(inviteCode: $code password: $password)
       }

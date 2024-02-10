@@ -31,6 +31,7 @@ export async function addNewOrganization(context: AppContext, tenantId: string, 
     await saveParties(tx, [party]);
     await createCustomer(tx, party.id);
     await createOrganization(tx, party.id, input.name);
+
     const people = await createPeople(tx, tenantId, input.people);
     const addresses = await updateAddresses(tx, party.id, input.addresses);
     const emails = await updateEmails(tx, party.id, input.emails);
