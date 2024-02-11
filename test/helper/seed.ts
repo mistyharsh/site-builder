@@ -68,13 +68,11 @@ export async function seed(db: DbClient): Promise<SeedData> {
 }
 
 export async function cleanup(db: DbClient, seedData: SeedData) {
-  const { tenant, invitation, user } = idSchema;
+  const { tenant, user } = idSchema;
 
   await db.delete(user)
     .where(inArray(user.id, [seedData.user1.id, seedData.user2.id]));
 
-  await db.delete(invitation)
-    .where(eq(invitation.id, seedData.invitation.id));
 
   await db.delete(tenant)
     .where(eq(tenant.id, seedData.tenant.id));
