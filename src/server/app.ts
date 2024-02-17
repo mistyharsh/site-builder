@@ -1,4 +1,3 @@
-import { session } from '@webf/base';
 import { Hono } from 'hono';
 
 import { schema } from '../graphql/schema.js';
@@ -14,14 +13,7 @@ export async function makeApp(env: AppEnv): Promise<HonoApp> {
   const app: HonoApp = new Hono();
 
   // Set up authentication routes and session middleware
-  const authSystem = await setupAuth(env, app);
-
-  //// AUTHENTICATION ROUTES ////
-  // Set up user access information on every route.
-  app.use('*', session({ db: authSystem.db }));
-
-  // Authentication endpoints
-  app.route('/auth', authSystem.auth);
+  await setupAuth(env, app);
 
   app.use('*', context(env.db));
 
@@ -43,7 +35,6 @@ export async function makeApp(env: AppEnv): Promise<HonoApp> {
 
 function context(db: DbClient) {
   return createMiddleware(async function contextM(c: HonoContext, next) {
-
     c.set('context', {
       db,
       access: c.var.session,

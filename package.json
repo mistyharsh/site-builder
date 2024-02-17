@@ -12,8 +12,8 @@
     "dev:db:generate": "drizzle-kit generate:pg",
     "test": "dotenv -e .env.test -- tsx --test",
     "test:gql": "graphql-codegen --c ./scripts/codegen.ts",
-    "test:db:setup": "dotenv -e .env.test -- tsx ./scripts/helper/db.ts",
-    "test:db:teardown": "dotenv -e .env.test -- tsx ./scripts/helper/db.ts --teardown"
+    "test:db:setup": "dotenv -e .env.test -- tsx ./scripts/dbSetup.ts",
+    "test:db:teardown": "dotenv -e .env.test -- tsx ./scripts/dbSetup.ts --teardown"
   },
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
@@ -21,28 +21,28 @@
     "node": "20.10.0"
   },
   "dependencies": {
-    "@hono/node-server": "^1.5.0",
+    "@hono/node-server": "^1.8.0",
     "@pothos/core": "^3.41.0",
-    "@webf/auth": "^0.1.1",
-    "@webf/base": "^0.6.1",
-    "drizzle-kit": "^0.20.13",
+    "@webf/auth": "^0.2.0",
+    "@webf/base": "^0.7.0",
+    "drizzle-kit": "^0.20.14",
     "drizzle-orm": "^0.29.3",
     "graphql": "^16.8.1",
     "graphql-scalars": "^1.22.4",
-    "hono": "^3.12.7",
+    "hono": "^3.12.12",
     "postgres": "^3.4.3",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.0",
-    "@graphql-codegen/client-preset": "^4.1.0",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.2",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/madge": "^5.0.3",
-    "@types/node": "^20.11.7",
-    "dotenv": "^16.4.1",
+    "@types/node": "^20.11.19",
+    "dotenv": "^16.4.4",
     "dotenv-cli": "^7.3.0",
     "madge": "^6.1.0",
-    "tsx": "^4.7.0",
+    "tsx": "^4.7.1",
     "typescript": "^5.3.3"
   }
 }

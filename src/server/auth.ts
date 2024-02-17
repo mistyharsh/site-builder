@@ -1,18 +1,11 @@
 import type { AuthSystem, OAuthCallbacks } from '@webf/base';
-import { makeAuth, addOpenIDStrategy, addPasswordStrategy, google } from '@webf/base';
+import { makeAuth, google } from '@webf/base';
 
-import { AppEnv } from '../type.js';
-import { HonoApp } from './type.js';
+import type { AppEnv } from '../type.js';
+import type { HonoApp } from './type.js';
 
 
 export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> {
-  const { auth, db } = await makeAuth({
-    db: {
-      pgClient: env.pgClient,
-      logger: true,
-    },
-  });
-
   const callbacks: OAuthCallbacks = {
     onLogin(_user, _profile) {
       return Promise.resolve('/');
@@ -32,8 +25,17 @@ export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> 
     redirectUri: `${env.hostUrl}/auth/openid/google/callback`,
   });
 
-  await addOpenIDStrategy(auth, googleClient, callbacks);
-  await addPasswordStrategy(auth);
+  const { auth, db } = await makeAuth({
+    app,
+    db: {
+      pgClient: env.pgClient,
+      logger: true,
+    },
+    usePassword: true,
+    strategies: [
+      { callbacks, client: googleClient },
+    ],
+  });
 
   return { auth, db };
 }
