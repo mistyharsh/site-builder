@@ -32,6 +32,7 @@ export async function setupAuth(env: AppEnv, app: HonoApp): Promise<AuthSystem> 
       logger: true,
     },
     usePassword: true,
+    useInvitation: true,
     strategies: [
       { callbacks, client: googleClient },
     ],
