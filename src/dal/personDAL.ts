@@ -1,4 +1,6 @@
-import type { Person } from '../contract/DbType.js';
+import { pk } from '@webf/auth/util/code';
+
+import type { OrgPeople, Person } from '../contract/DbType.js';
 import type { PersonInput } from '../contract/Type.js';
 import type { DbClient } from '../db/client.js';
 import * as schema from '../db/party.js';
@@ -25,6 +27,27 @@ export async function createPeople(db: DbClient, tenantId: string, people: Perso
 
   const _ = await db
     .insert(schema.person)
+    .values(toInsert);
+
+  return toInsert;
+}
+
+
+export async function createOrgPeople(db: DbClient, organizationId: string, people: Person[]): Promise<OrgPeople[]> {
+  if (!people.length) {
+    return Promise.resolve([]);
+  }
+
+  const toInsert: OrgPeople[] = people.map((p, index) => ({
+    id: pk(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    organizationId,
+    personId: p.id,
+  }));
+
+  await db
+    .insert(schema.orgPeople)
     .values(toInsert);
 
   return toInsert;

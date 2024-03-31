@@ -1,4 +1,5 @@
-import { addNewOrganization } from '../context/contact/organization.js';
+import { addNewOrganization } from '../context/contact/customer/organization.js';
+import { addNewIndividual } from '../context/contact/customer/person.js';
 import { builder } from './builder.js';
 
 // INPUT TYPES
@@ -115,7 +116,7 @@ builder.objectType('Organization', {
 
 // MUTATIONS
 builder.mutationFields((t) => ({
-  createOrganization: t.field({
+  createContactOrganization: t.field({
     type: 'Organization',
     args: {
       tenantId: t.arg.string(),
@@ -125,6 +126,19 @@ builder.mutationFields((t) => ({
       const organization = await addNewOrganization(context, tenantId, input);
 
       return organization;
+    },
+  }),
+
+  createContactPerson: t.field({
+    type: 'Person',
+    args: {
+      tenantId: t.arg.string(),
+      input: t.arg({ type: 'PersonInput' }),
+    },
+    async resolve(parent, { input, tenantId }, context) {
+      const person = await addNewIndividual(context, tenantId, input);
+
+      return person;
     },
   }),
 }));

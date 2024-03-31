@@ -33,7 +33,8 @@ scalar Gender
 type Mutation {
   acceptInvitation(inviteId: String!): Boolean!
   claimInvitation(inviteCode: String!, password: String!): Boolean!
-  createOrganization(input: OrganizationInput!, tenantId: String!): Organization!
+  createContactOrganization(input: OrganizationInput!, tenantId: String!): Organization!
+  createContactPerson(input: PersonInput!, tenantId: String!): Person!
   createTenant(input: NewTenantInput!): NewTenantResponse!
   inviteUser(input: NewInvitationInput!, tenantId: String!): Boolean!
 }
