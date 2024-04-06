@@ -23,7 +23,6 @@ import type { Gender } from '../contract/DbType.js';
 import { z } from 'zod';
 
 export type GraphQLSchema = {
-
   Context: AppContext;
   Objects: {
     // Identity Types

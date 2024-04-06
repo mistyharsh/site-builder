@@ -78,7 +78,7 @@ input OrganizationInput {
 type Person {
   dob: Date
   familyName: String!
-  givenName1: String!
+  givenName: String!
   id: ID!
   middleName: String!
 }

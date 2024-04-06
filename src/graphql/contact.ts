@@ -80,7 +80,7 @@ builder.objectType('Phone', {
 builder.objectType('Person', {
   fields: (t) => ({
     id: t.exposeID('id'),
-    givenName1: t.exposeString('givenName'),
+    givenName: t.exposeString('givenName'),
     familyName: t.exposeString('familyName'),
     middleName: t.exposeString('middleName'),
     dob: t.field({
