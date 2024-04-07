@@ -21,28 +21,28 @@
     "node": "20.10.0"
   },
   "dependencies": {
-    "@hono/node-server": "^1.8.0",
+    "@hono/node-server": "^1.9.1",
     "@pothos/core": "^3.41.0",
-    "@webf/auth": "^0.2.0",
-    "@webf/base": "^0.7.0",
+    "@webf/auth": "^0.3.0",
+    "@webf/base": "^0.8.0",
     "drizzle-kit": "^0.20.14",
     "drizzle-orm": "^0.29.3",
     "graphql": "^16.8.1",
-    "graphql-scalars": "^1.22.4",
+    "graphql-scalars": "^1.23.0",
     "hono": "^3.12.12",
-    "postgres": "^3.4.3",
+    "postgres": "^3.4.4",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/madge": "^5.0.3",
-    "@types/node": "^20.11.19",
-    "dotenv": "^16.4.4",
-    "dotenv-cli": "^7.3.0",
+    "@types/node": "^20.12.5",
+    "dotenv": "^16.4.5",
+    "dotenv-cli": "^7.4.1",
     "madge": "^6.1.0",
-    "tsx": "^4.7.1",
-    "typescript": "^5.3.3"
+    "tsx": "^4.7.2",
+    "typescript": "^5.4.4"
   }
 }

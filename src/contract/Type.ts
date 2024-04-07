@@ -1,10 +1,10 @@
-import type { Access } from '@webf/auth/context';
+import type { AuthContext } from '@webf/auth/context';
+
 import type { DbClient } from '../db/client.js';
 import type { Gender } from './DbType.js';
 
-export type AppContext = {
+export interface AppContext extends AuthContext {
   db: DbClient;
-  access: Access;
 };
 
 /////////////////////////////////////////////

@@ -63,6 +63,7 @@ export type GraphQLSchema = {
 };
 
 export const builder = new SchemaBuilder<GraphQLSchema>({
+  plugins: [],
   defaultInputFieldRequiredness: true,
 });
 

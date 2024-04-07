@@ -1,15 +1,19 @@
-import fs from 'fs/promises';
+import fs from 'node:fs/promises';
 
-import { GraphQLSchema } from 'graphql';
-import { printSchema, lexicographicSortSchema } from 'graphql';
+import { mergeSchemas } from '@graphql-tools/schema';
+import { idSchema } from '@webf/base';
+import { type GraphQLSchema, printSchema, lexicographicSortSchema } from 'graphql';
 
 import { builder } from './builder.js';
 
 // Side effect imports
-import './identity.js';
 import './contact.js';
 
-export const schema: GraphQLSchema = builder.toSchema();
+export const crmSchema: GraphQLSchema = builder.toSchema();
+
+export const schema = mergeSchemas({
+  schemas: [crmSchema, idSchema],
+});
 
 
 export async function saveGraphQLSchema(filePath: string) {
