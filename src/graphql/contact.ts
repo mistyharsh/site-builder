@@ -1,5 +1,5 @@
-import { addNewOrganization } from '../context/contact/customer/organization.js';
-import { addNewIndividual } from '../context/contact/customer/person.js';
+import { addNewOrganization } from '../context/customer/organization.js';
+import { addNewIndividual } from '../context/customer/person.js';
 import { builder } from './builder.js';
 
 // INPUT TYPES

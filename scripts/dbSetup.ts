@@ -43,7 +43,7 @@ export async function setupCleanDb() {
   const db = initDbRepo({ pgClient });
 
   // Initialize the system with first API Key.
-  const response = await initialize({ db });
+  const response = await initialize(db);
 
   if (response.ok) {
     console.log('Generated API Key', response.value.apiKey);

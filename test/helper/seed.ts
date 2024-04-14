@@ -1,6 +1,6 @@
 import {
   type Invitation,
-  type NewTenant,
+  type NewTenantInput,
   type UserInput,
   type User,
   type Tenant,
@@ -11,6 +11,7 @@ import {
 import type { DbClient } from '../../src/db/client.js';
 import * as idSchema from '@webf/auth/schema/identity';
 import { eq, inArray } from 'drizzle-orm';
+import { getPublicAccess } from './context.js';
 
 export type SeedData = {
   tenant: Tenant;
@@ -19,7 +20,7 @@ export type SeedData = {
   user2: User;
 };
 
-export const tenant: NewTenant = {
+export const tenant: NewTenantInput = {
   name: 'The Good Place',
   description: 'First account',
   key: 'good-place',
@@ -45,7 +46,10 @@ export const user2: UserInput = {
 };
 
 export async function seed(db: DbClient): Promise<SeedData> {
-  const context = { db };
+  const context = {
+    db,
+    access: getPublicAccess()
+  };
 
   // Create a tenant
   const newTenant = await createNewTenantWithInvite(context, tenant);

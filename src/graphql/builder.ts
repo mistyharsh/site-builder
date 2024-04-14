@@ -1,5 +1,4 @@
 import SchemaBuilder from '@pothos/core';
-import { NewInvitationInput, Tenant, User } from '@webf/auth/context';
 import { DateResolver } from 'graphql-scalars';
 
 import type {
@@ -15,22 +14,12 @@ import type {
   Phone,
   PhoneInput
 } from '../contract/Type.js';
-import type {
-  NewTenantInput,
-  NewTenantResponse
-} from '../context/identity/tenant.js';
 import type { Gender } from '../contract/DbType.js';
 import { z } from 'zod';
 
 export type GraphQLSchema = {
   Context: AppContext;
   Objects: {
-    // Identity Types
-    NewTenantResponse: NewTenantResponse;
-    User: User;
-    Tenant: Tenant;
-
-    // CRM Types
     Address: Address;
     Email: Email;
     Phone: Phone;
@@ -38,10 +27,6 @@ export type GraphQLSchema = {
     Organization: Organization;
   };
   Inputs: {
-    NewTenantInput: NewTenantInput;
-    NewInvitationInput: Omit<NewInvitationInput, 'duration'>;
-
-    // CRM Inputs
     AddressInput: AddressInput;
     EmailInput: EmailInput;
     PhoneInput: PhoneInput;

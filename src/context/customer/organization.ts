@@ -1,12 +1,12 @@
 import { isMember } from '@webf/auth/context';
 
-import type { AppContext, Organization, OrganizationInput } from '../../../contract/Type.js';
-import { updateAddresses } from '../../../dal/addressDAL.js';
-import { updateEmails } from '../../../dal/emailDAL.js';
-import { createOrganization } from '../../../dal/organizationDAL.js';
-import { createCustomer, makeParty, saveParties } from '../../../dal/partyDAL.js';
-import { createOrgPeople, createPeople } from '../../../dal/personDAL.js';
-import { updatePhones } from '../../../dal/phoneDAL.js';
+import type { AppContext, Organization, OrganizationInput } from '../../contract/Type.js';
+import { updateAddresses } from '../../dal/addressDAL.js';
+import { updateEmails } from '../../dal/emailDAL.js';
+import { createOrganization } from '../../dal/organizationDAL.js';
+import { createCustomer, makeParty, saveParties } from '../../dal/partyDAL.js';
+import { createOrgPeople, createPeople } from '../../dal/personDAL.js';
+import { updatePhones } from '../../dal/phoneDAL.js';
 
 
 export async function addNewOrganization(context: AppContext, tenantId: string, input: OrganizationInput): Promise<Organization> {

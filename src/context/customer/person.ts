@@ -1,11 +1,11 @@
 import { isMember } from '@webf/auth/context';
 
-import type { AppContext, Person, PersonInput } from '../../../contract/Type.js';
-import { createCustomer, makeParty, saveParties } from '../../../dal/partyDAL.js';
-import { createPeople } from '../../../dal/personDAL.js';
-import { updateAddresses } from '../../../dal/addressDAL.js';
-import { updateEmails } from '../../../dal/emailDAL.js';
-import { updatePhones } from '../../../dal/phoneDAL.js';
+import type { AppContext, Person, PersonInput } from '../../contract/Type.js';
+import { createCustomer, makeParty, saveParties } from '../../dal/partyDAL.js';
+import { createPeople } from '../../dal/personDAL.js';
+import { updateAddresses } from '../../dal/addressDAL.js';
+import { updateEmails } from '../../dal/emailDAL.js';
+import { updatePhones } from '../../dal/phoneDAL.js';
 
 
 export async function addNewIndividual(context: AppContext, tenantId: string, input: PersonInput): Promise<Person> {
