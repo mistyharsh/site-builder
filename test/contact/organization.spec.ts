@@ -37,8 +37,6 @@ it('Organization', async (t) => {
       tenantId: data.tenant.id,
     });
 
-    console.log('result', result);
-
     // Verify - Result
     equal(result.data?.createOrganization.name, input.name);
   });

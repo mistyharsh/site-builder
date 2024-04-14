@@ -1,10 +1,15 @@
 import SchemaBuilder from '@pothos/core';
+import type { Page } from '@webf/auth/context';
 import { DateResolver } from 'graphql-scalars';
+import { z } from 'zod';
 
 import type {
   Address,
   AddressInput,
   AppContext,
+  Contact,
+  ContactOrg,
+  ContactPerson,
   Email,
   EmailInput,
   Organization,
@@ -15,7 +20,6 @@ import type {
   PhoneInput
 } from '../contract/Type.js';
 import type { Gender } from '../contract/DbType.js';
-import { z } from 'zod';
 
 export type GraphQLSchema = {
   Context: AppContext;
@@ -25,8 +29,12 @@ export type GraphQLSchema = {
     Phone: Phone;
     Person: Person;
     Organization: Organization;
+    Contact: Contact;
+    ContactOrg: ContactOrg;
+    ContactPerson: ContactPerson;
   };
   Inputs: {
+    Page: Page;
     AddressInput: AddressInput;
     EmailInput: EmailInput;
     PhoneInput: PhoneInput;

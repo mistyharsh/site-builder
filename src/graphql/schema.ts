@@ -8,6 +8,7 @@ import { builder } from './builder.js';
 
 // Side effect imports
 import './contact.js';
+import './utility.js';
 
 export const crmSchema: GraphQLSchema = builder.toSchema();
 

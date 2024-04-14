@@ -2,7 +2,12 @@ import { boolean, date, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 import { country, postalCode, tenant } from './base.js';
 
-
+/**
+ * A party is a generic term for an individual or organization.
+ * A party could be customer, organization, or person.
+ * A person is a party but may not be a customer.
+ * A organization is a party but may not be a customer.
+ */
 export const party = pgTable('party', {
   id: text('id').primaryKey(),
 
@@ -13,6 +18,9 @@ export const party = pgTable('party', {
 });
 
 
+/**
+ * Actual customer of the tenant.
+ */
 export const customer = pgTable('customer', {
   id: text('id').primaryKey().references(() => party.id, { onDelete: 'cascade' }),
 

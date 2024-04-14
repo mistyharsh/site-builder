@@ -3,6 +3,11 @@ import type { AuthContext } from '@webf/auth/context';
 import type { DbClient } from '../db/client.js';
 import type { Gender } from './DbType.js';
 
+/**
+ * The type represents the context object that contains the
+ * information user trying to access system and other utility
+ * types like database client.
+ */
 export interface AppContext extends AuthContext {
   db: DbClient;
 };
@@ -89,3 +94,21 @@ export type Organization = {
   emails: Email[];
   phones: Phone[];
 };
+
+export type ContactOrg = {
+  type: 'organization';
+  id: string;
+  name: string;
+};
+
+export type ContactPerson = {
+  type: 'person';
+  id: string;
+  givenName: string;
+  familyName: string;
+  middleName: string;
+};
+
+export type Contact =
+  | ContactOrg
+  | ContactPerson;

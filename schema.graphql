@@ -13,6 +13,20 @@ input AddressInput {
   street: String!
 }
 
+union Contact = ContactOrg | ContactPerson
+
+type ContactOrg {
+  id: ID!
+  name: String!
+}
+
+type ContactPerson {
+  familyName: String!
+  givenName: String!
+  id: ID!
+  middleName: String!
+}
+
 """
 A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
 """
@@ -33,7 +47,11 @@ scalar Gender
 type Mutation {
   acceptInvitation(inviteId: String!): Boolean!
   claimInvitation(inviteCode: String!, password: String!): Boolean!
+
+  """Create a new organization type contact"""
   createContactOrganization(input: OrganizationInput!, tenantId: String!): Organization!
+
+  """Create a new individual type contact"""
   createContactPerson(input: PersonInput!, tenantId: String!): Person!
   createTenant(input: NewTenantInput!): NewTenantResponse!
   inviteUser(input: NewInvitationInput!, tenantId: String!): Boolean!
@@ -75,6 +93,11 @@ input OrganizationInput {
   phones: [PhoneInput!]!
 }
 
+input Page {
+  number: Int!
+  size: Int!
+}
+
 type Person {
   dob: Date
   familyName: String!
@@ -107,6 +130,8 @@ input PhoneInput {
 }
 
 type Query {
+  """Get all contacts"""
+  getContacts(page: Page!, tenantId: String!): [Contact!]!
   getTenants: [Tenant!]!
   getUsers(tenantId: String!): [User!]!
   hello: String!

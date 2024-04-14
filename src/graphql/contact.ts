@@ -1,3 +1,4 @@
+import { getContacts } from '../context/customer/list.js';
 import { addNewOrganization } from '../context/customer/organization.js';
 import { addNewIndividual } from '../context/customer/person.js';
 import { builder } from './builder.js';
@@ -114,9 +115,38 @@ builder.objectType('Organization', {
   }),
 });
 
+
+builder.objectType('ContactPerson', {
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    givenName: t.exposeString('givenName'),
+    familyName: t.exposeString('familyName'),
+    middleName: t.exposeString('middleName'),
+  }),
+});
+
+builder.objectType('ContactOrg', {
+  fields: (t) => ({
+    id: t.exposeID('id'),
+    name: t.exposeString('name'),
+  }),
+});
+
+builder.unionType('Contact', {
+  types: ['ContactOrg', 'ContactPerson'],
+  resolveType: (value) => {
+    if (value.type === 'organization') {
+      return 'ContactOrg';
+    } else {
+      return 'ContactPerson';
+    }
+  },
+});
+
 // MUTATIONS
 builder.mutationFields((t) => ({
   createContactOrganization: t.field({
+    description: 'Create a new organization type contact',
     type: 'Organization',
     args: {
       tenantId: t.arg.string(),
@@ -130,6 +160,7 @@ builder.mutationFields((t) => ({
   }),
 
   createContactPerson: t.field({
+    description: 'Create a new individual type contact',
     type: 'Person',
     args: {
       tenantId: t.arg.string(),
@@ -144,3 +175,18 @@ builder.mutationFields((t) => ({
 }));
 
 // QUERIES
+builder.queryFields((t) => ({
+  getContacts: t.field({
+    description: 'Get all contacts',
+    type: ['Contact'],
+    args: {
+      tenantId: t.arg.string(),
+      page: t.arg({ type: 'Page' }),
+    },
+    async resolve(parent, { tenantId, page }, context) {
+      const contacts = await getContacts(context, tenantId, page);
+
+      return contacts;
+    },
+  }),
+}));
