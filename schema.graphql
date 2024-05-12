@@ -44,6 +44,13 @@ input EmailInput {
 
 scalar Gender
 
+type Invitation {
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+}
+
 type Mutation {
   acceptInvitation(inviteId: String!): Boolean!
   claimInvitation(inviteCode: String!, password: String!): Boolean!
@@ -54,7 +61,9 @@ type Mutation {
   """Create a new individual type contact"""
   createContactPerson(input: PersonInput!, tenantId: String!): Person!
   createTenant(input: NewTenantInput!): NewTenantResponse!
+  forgotPassword(userName: String!): Boolean!
   inviteUser(input: NewInvitationInput!, tenantId: String!): Boolean!
+  resetPassword(newPassword: String!, resetToken: String!): Boolean!
 }
 
 input NewInvitationInput {
@@ -132,9 +141,16 @@ input PhoneInput {
 type Query {
   """Get all contacts"""
   getContacts(page: Page!, tenantId: String!): [Contact!]!
+  getInvitation(invitationCode: String!): Invitation!
+  getResetToken(resetToken: String!): ResetPasswordRequest!
   getTenants: [Tenant!]!
   getUsers(tenantId: String!): [User!]!
   hello: String!
+}
+
+type ResetPasswordRequest {
+  id: ID!
+  userId: ID!
 }
 
 type Tenant {

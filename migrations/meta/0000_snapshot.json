@@ -1,10 +1,8 @@
 {
-  "id": "9c514d6e-00ab-4b33-b2cb-1b3ae353cba8",
-  "prevId": "00000000-0000-0000-0000-000000000000",
-  "version": "5",
-  "dialect": "pg",
+  "version": "6",
+  "dialect": "postgresql",
   "tables": {
-    "api_key": {
+    "public.api_key": {
       "name": "api_key",
       "schema": "",
       "columns": {
@@ -56,7 +54,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "city": {
+    "public.city": {
       "name": "city",
       "schema": "",
       "columns": {
@@ -84,21 +82,21 @@
         "city_state_id_state_id_fk": {
           "name": "city_state_id_state_id_fk",
           "tableFrom": "city",
-          "tableTo": "state",
           "columnsFrom": [
             "state_id"
           ],
+          "tableTo": "state",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "country": {
+    "public.country": {
       "name": "country",
       "schema": "",
       "columns": {
@@ -133,21 +131,21 @@
       "uniqueConstraints": {
         "country_code_unique": {
           "name": "country_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "code"
-          ]
+          ],
+          "nullsNotDistinct": false
         },
         "country_isd_code_unique": {
           "name": "country_isd_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "isd_code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "invitation": {
+    "public.invitation": {
       "name": "invitation",
       "schema": "",
       "columns": {
@@ -217,29 +215,29 @@
         "invitation_tenant_id_tenant_id_fk": {
           "name": "invitation_tenant_id_tenant_id_fk",
           "tableFrom": "invitation",
-          "tableTo": "tenant",
           "columnsFrom": [
             "tenant_id"
           ],
+          "tableTo": "tenant",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "invitation_code_unique": {
           "name": "invitation_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "local_login": {
+    "public.local_login": {
       "name": "local_login",
       "schema": "",
       "columns": {
@@ -285,29 +283,29 @@
         "local_login_user_id_app_user_id_fk": {
           "name": "local_login_user_id_app_user_id_fk",
           "tableFrom": "local_login",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "local_login_username_unique": {
           "name": "local_login_username_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "username"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "login_attempt": {
+    "public.login_attempt": {
       "name": "login_attempt",
       "schema": "",
       "columns": {
@@ -335,21 +333,21 @@
         "login_attempt_user_id_app_user_id_fk": {
           "name": "login_attempt_user_id_app_user_id_fk",
           "tableFrom": "login_attempt",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "postal_code": {
+    "public.postal_code": {
       "name": "postal_code",
       "schema": "",
       "columns": {
@@ -383,29 +381,29 @@
         "postal_code_city_id_city_id_fk": {
           "name": "postal_code_city_id_city_id_fk",
           "tableFrom": "postal_code",
-          "tableTo": "city",
           "columnsFrom": [
             "city_id"
           ],
+          "tableTo": "city",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "postal_code_code_unique": {
           "name": "postal_code_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "provider_login": {
+    "public.provider_login": {
       "name": "provider_login",
       "schema": "",
       "columns": {
@@ -439,30 +437,30 @@
         "provider_login_user_id_app_user_id_fk": {
           "name": "provider_login_user_id_app_user_id_fk",
           "tableFrom": "provider_login",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "provider_unique_id": {
           "name": "provider_unique_id",
-          "nullsNotDistinct": false,
           "columns": [
             "provider_id",
             "subject_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "reset_password_request": {
+    "public.reset_password_request": {
       "name": "reset_password_request",
       "schema": "",
       "columns": {
@@ -502,29 +500,29 @@
         "reset_password_request_user_id_app_user_id_fk": {
           "name": "reset_password_request_user_id_app_user_id_fk",
           "tableFrom": "reset_password_request",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "reset_password_request_code_unique": {
           "name": "reset_password_request_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "state": {
+    "public.state": {
       "name": "state",
       "schema": "",
       "columns": {
@@ -558,29 +556,29 @@
         "state_country_id_country_id_fk": {
           "name": "state_country_id_country_id_fk",
           "tableFrom": "state",
-          "tableTo": "country",
           "columnsFrom": [
             "country_id"
           ],
+          "tableTo": "country",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "state_code_unique": {
           "name": "state_code_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "code"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "tenant": {
+    "public.tenant": {
       "name": "tenant",
       "schema": "",
       "columns": {
@@ -627,14 +625,14 @@
       "uniqueConstraints": {
         "key": {
           "name": "key",
-          "nullsNotDistinct": false,
           "columns": [
             "key"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "tenant_user": {
+    "public.tenant_user": {
       "name": "tenant_user",
       "schema": "",
       "columns": {
@@ -674,43 +672,43 @@
         "tenant_user_tenant_id_tenant_id_fk": {
           "name": "tenant_user_tenant_id_tenant_id_fk",
           "tableFrom": "tenant_user",
-          "tableTo": "tenant",
           "columnsFrom": [
             "tenant_id"
           ],
+          "tableTo": "tenant",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "tenant_user_user_id_app_user_id_fk": {
           "name": "tenant_user_user_id_app_user_id_fk",
           "tableFrom": "tenant_user",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "membership": {
           "name": "membership",
-          "nullsNotDistinct": false,
           "columns": [
             "tenant_id",
             "user_id"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "app_user": {
+    "public.app_user": {
       "name": "app_user",
       "schema": "",
       "columns": {
@@ -750,7 +748,7 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "user_email": {
+    "public.user_email": {
       "name": "user_email",
       "schema": "",
       "columns": {
@@ -784,29 +782,29 @@
         "user_email_user_id_app_user_id_fk": {
           "name": "user_email_user_id_app_user_id_fk",
           "tableFrom": "user_email",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "user_email_email_unique": {
           "name": "user_email_email_unique",
-          "nullsNotDistinct": false,
           "columns": [
             "email"
-          ]
+          ],
+          "nullsNotDistinct": false
         }
       }
     },
-    "user_token": {
+    "public.user_token": {
       "name": "user_token",
       "schema": "",
       "columns": {
@@ -840,21 +838,21 @@
         "user_token_user_id_app_user_id_fk": {
           "name": "user_token_user_id_app_user_id_fk",
           "tableFrom": "user_token",
-          "tableTo": "app_user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "app_user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "customer": {
+    "public.customer": {
       "name": "customer",
       "schema": "",
       "columns": {
@@ -882,21 +880,21 @@
         "customer_id_party_id_fk": {
           "name": "customer_id_party_id_fk",
           "tableFrom": "customer",
-          "tableTo": "party",
           "columnsFrom": [
             "id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "organization_people": {
+    "public.organization_people": {
       "name": "organization_people",
       "schema": "",
       "columns": {
@@ -936,34 +934,34 @@
         "organization_people_organization_id_organization_id_fk": {
           "name": "organization_people_organization_id_organization_id_fk",
           "tableFrom": "organization_people",
-          "tableTo": "organization",
           "columnsFrom": [
             "organization_id"
           ],
+          "tableTo": "organization",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "organization_people_person_id_person_id_fk": {
           "name": "organization_people_person_id_person_id_fk",
           "tableFrom": "organization_people",
-          "tableTo": "person",
           "columnsFrom": [
             "person_id"
           ],
+          "tableTo": "person",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "organization": {
+    "public.organization": {
       "name": "organization",
       "schema": "",
       "columns": {
@@ -985,21 +983,21 @@
         "organization_id_party_id_fk": {
           "name": "organization_id_party_id_fk",
           "tableFrom": "organization",
-          "tableTo": "party",
           "columnsFrom": [
             "id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "party": {
+    "public.party": {
       "name": "party",
       "schema": "",
       "columns": {
@@ -1033,21 +1031,21 @@
         "party_tenant_id_tenant_id_fk": {
           "name": "party_tenant_id_tenant_id_fk",
           "tableFrom": "party",
-          "tableTo": "tenant",
           "columnsFrom": [
             "tenant_id"
           ],
+          "tableTo": "tenant",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "party_address": {
+    "public.party_address": {
       "name": "party_address",
       "schema": "",
       "columns": {
@@ -1105,34 +1103,34 @@
         "party_address_party_id_party_id_fk": {
           "name": "party_address_party_id_party_id_fk",
           "tableFrom": "party_address",
-          "tableTo": "party",
           "columnsFrom": [
             "party_id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "party_address_postal_code_id_postal_code_id_fk": {
           "name": "party_address_postal_code_id_postal_code_id_fk",
           "tableFrom": "party_address",
-          "tableTo": "postal_code",
           "columnsFrom": [
             "postal_code_id"
           ],
+          "tableTo": "postal_code",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "party_email": {
+    "public.party_email": {
       "name": "party_email",
       "schema": "",
       "columns": {
@@ -1172,21 +1170,21 @@
         "party_email_party_id_party_id_fk": {
           "name": "party_email_party_id_party_id_fk",
           "tableFrom": "party_email",
-          "tableTo": "party",
           "columnsFrom": [
             "party_id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "party_phone": {
+    "public.party_phone": {
       "name": "party_phone",
       "schema": "",
       "columns": {
@@ -1232,34 +1230,34 @@
         "party_phone_party_id_party_id_fk": {
           "name": "party_phone_party_id_party_id_fk",
           "tableFrom": "party_phone",
-          "tableTo": "party",
           "columnsFrom": [
             "party_id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         },
         "party_phone_country_id_country_id_fk": {
           "name": "party_phone_country_id_country_id_fk",
           "tableFrom": "party_phone",
-          "tableTo": "country",
           "columnsFrom": [
             "country_id"
           ],
+          "tableTo": "country",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "person": {
+    "public.person": {
       "name": "person",
       "schema": "",
       "columns": {
@@ -1305,15 +1303,15 @@
         "person_id_party_id_fk": {
           "name": "person_id_party_id_fk",
           "tableFrom": "person",
-          "tableTo": "party",
           "columnsFrom": [
             "id"
           ],
+          "tableTo": "party",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -1323,8 +1321,10 @@
   "enums": {},
   "schemas": {},
   "_meta": {
-    "columns": {},
     "schemas": {},
-    "tables": {}
-  }
+    "tables": {},
+    "columns": {}
+  },
+  "id": "9c514d6e-00ab-4b33-b2cb-1b3ae353cba8",
+  "prevId": "00000000-0000-0000-0000-000000000000"
 }

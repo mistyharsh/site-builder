@@ -11,10 +11,3 @@ export {
   userEmail,
   userToken,
 } from '@webf/auth/schema/identity';
-
-export {
-  city,
-  country,
-  postalCode,
-  state,
-} from '@webf/auth/schema/location';
