@@ -45,8 +45,8 @@ export async function setupCleanDb() {
   // Initialize the system with first API Key.
   const response = await initialize(db);
 
-  if (response.ok) {
-    console.log('Generated API Key', response.value.apiKey);
+  if (response) {
+    console.log('Generated API Key', response.apiKey);
   } else {
     console.warn('Failed to generate API Key', response);
   }

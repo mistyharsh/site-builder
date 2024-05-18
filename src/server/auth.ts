@@ -1,5 +1,5 @@
-import type { AuthSystem, OAuthCallbacks } from '@webf/base';
-import { makeAuth, google } from '@webf/base';
+import type { AuthSystem, OAuthCallbacks } from '@webf/hono-auth';
+import { makeAuth, google } from '@webf/hono-auth';
 
 import type { AppEnv } from '../type.js';
 import type { HonoApp } from './type.js';

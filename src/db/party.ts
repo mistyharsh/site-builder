@@ -1,6 +1,7 @@
 import { boolean, date, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
-import { country, postalCode, tenant } from './base.js';
+import { tenant } from './base.js';
+import { country, postalCode } from './location.js';
 
 /**
  * A party is a generic term for an individual or organization.

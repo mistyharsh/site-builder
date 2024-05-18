@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 
 import { mergeSchemas } from '@graphql-tools/schema';
-import { idSchema } from '@webf/base';
+import { idSchema } from '@webf/hono-auth';
 import { type GraphQLSchema, printSchema, lexicographicSortSchema } from 'graphql';
 
 import { builder } from './builder.js';
