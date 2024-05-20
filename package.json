@@ -18,7 +18,7 @@
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
   "volta": {
-    "node": "20.10.0"
+    "node": "22.2.0"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
