@@ -142,6 +142,7 @@ type Query {
   """Get all contacts"""
   getContacts(page: Page!, tenantId: String!): [Contact!]!
   getInvitation(invitationCode: String!): Invitation!
+  getMyTenants: [Tenant!]!
   getResetToken(resetToken: String!): ResetPasswordRequest!
   getTenants: [Tenant!]!
   getUsers(tenantId: String!): [User!]!
