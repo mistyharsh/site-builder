@@ -7,6 +7,23 @@ import * as schema from '../db/party.js';
 import { makeParty, saveParties } from './partyDAL.js';
 
 
+export async function attachPersonToParty(db: DbClient, person: PersonInput, partyId: string) {
+  const toInsert = {
+    id: partyId,
+    givenName: person.givenName,
+    familyName: person.familyName,
+    middleName: person.middleName ?? '',
+    dob: person.dob ?? null,
+    gender: person.gender ?? 'unknown',
+  }
+
+  const _ = await db
+    .insert(schema.person)
+    .values(toInsert);
+
+  return toInsert;
+}
+
 export async function createPeople(db: DbClient, tenantId: string, people: PersonInput[]): Promise<Person[]> {
   if (!people.length) {
     return Promise.resolve([]);

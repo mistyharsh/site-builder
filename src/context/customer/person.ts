@@ -2,7 +2,7 @@ import { isMember } from '@webf/auth/context';
 
 import type { AppContext, Person, PersonInput } from '../../contract/Type.js';
 import { createCustomer, makeParty, saveParties } from '../../dal/partyDAL.js';
-import { createPeople } from '../../dal/personDAL.js';
+import { attachPersonToParty } from '../../dal/personDAL.js';
 import { updateAddresses } from '../../dal/addressDAL.js';
 import { updateEmails } from '../../dal/emailDAL.js';
 import { updatePhones } from '../../dal/phoneDAL.js';
@@ -28,7 +28,7 @@ export async function addNewIndividual(context: AppContext, tenantId: string, in
 
     await saveParties(tx, [party]);
     await createCustomer(tx, party.id);
-    await createPeople(tx, tenantId, [input]);
+    await attachPersonToParty(tx, input, party.id);
 
     await updateAddresses(tx, party.id, input.addresses);
     await updateEmails(tx, party.id, input.emails);
