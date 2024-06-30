@@ -23,8 +23,8 @@
   "dependencies": {
     "@hono/node-server": "^1.11.1",
     "@pothos/core": "^3.41.1",
-    "@webf/auth": "^0.6.0",
-    "@webf/hono-auth": "^0.11.0",
+    "@webf/auth": "^0.7.0",
+    "@webf/hono-auth": "^0.12.0",
     "drizzle-orm": "^0.30.10",
     "graphql": "^16.8.1",
     "graphql-scalars": "^1.23.0",
