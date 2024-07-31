@@ -18,7 +18,7 @@
   "author": "",
   "license": "SEE LICENSE IN LICENSE",
   "volta": {
-    "node": "22.2.0"
+    "node": "22.5.1"
   },
   "dependencies": {
     "@hono/node-server": "^1.11.1",
@@ -37,12 +37,12 @@
     "@graphql-codegen/client-preset": "^4.2.5",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/madge": "^5.0.3",
-    "@types/node": "^20.12.11",
+    "@types/node": "^22.0.0",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.2",
     "drizzle-kit": "^0.21.1",
     "madge": "^7.0.0",
-    "tsx": "^4.10.0",
-    "typescript": "^5.4.5"
+    "tsx": "^4.16.3",
+    "typescript": "^5.5.4"
   }
 }
