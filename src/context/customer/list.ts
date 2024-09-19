@@ -1,18 +1,33 @@
 import { isMember, type Page } from '@webf/auth/context';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 import type { AppContext, Contact } from '../../contract/Type.js';
-import { customer, organization, person } from '../../db/party.js';
+import { customer, organization, person, searchTable } from '../../db/party.js';
 
 
-export async function getContacts(context: AppContext, tenantId: string, page: Page): Promise<Contact[]> {
+export async function getContacts(context: AppContext, tenantId: string, page: Page, search: String): Promise<Contact[]> {
   const { db, access } = context;
 
   if(!isMember(access, tenantId)) {
     throw new Error('Access denied');
   }
 
-  const result = await db
+  let result;
+
+  if( search.length>0 ) {
+    result = await db
+    .select({
+      customer,
+      organization,
+      person,
+    })
+    .from(searchTable)
+    .leftJoin(customer, eq(customer.id, searchTable.partyId))
+    .leftJoin(person, eq(customer.id, person.id))
+    .leftJoin(organization, eq(customer.id, organization.id))
+    .where(sql`similarity(${search}, ${searchTable.text}) > 0`);
+  } else {
+    result = await db
     .select({
       customer,
       organization,
@@ -23,6 +38,7 @@ export async function getContacts(context: AppContext, tenantId: string, page: P
     .leftJoin(organization, eq(customer.id, organization.id))
     .offset(page.size * (page.number))
     .limit(page.size);
+  } 
 
   const contacts = result.map((r) => {
     let contact: Contact | null = null;

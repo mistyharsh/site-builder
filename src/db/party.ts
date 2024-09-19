@@ -95,3 +95,8 @@ export const partyPhone = pgTable('party_phone', {
 
   updatedAt: timestamp('updated_at', { withTimezone: true }).notNull(),
 });
+
+export const searchTable = pgTable('search_table', {
+  text: text('text').notNull(),
+  partyId: text('party_id').notNull().references(() => party.id, {onDelete: 'cascade'}),
+})
